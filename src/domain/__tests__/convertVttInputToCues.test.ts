@@ -62,7 +62,7 @@ describe("convertVttInputToCues should transform an srt file into a consistent m
           start: 0,
           end: 1,
           text: "Hello world!"
-        }, {start: 30, end: 31, text: "This is a subtitle"}, {
+        }, {start: 30, end: 31, text: "This is a subtitle\n"}, {
           start: 60,
           end: 61,
           text: "Foo"
@@ -72,7 +72,7 @@ describe("convertVttInputToCues should transform an srt file into a consistent m
         const stepDurationInSeconds = 60;
 
         // WHEN
-        const result = convertVttInputToCues(dependencies)(vttInput, stepDurationInSeconds);
+        const result = convertVttInputToCues(dependencies)(vttInput, {stepDurationInSeconds});
 
         // THEN
         expect(result).toEqual([

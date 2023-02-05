@@ -1,5 +1,5 @@
 import { compact } from "lodash";
-import {type Cue} from "./types";
+import {type ConversionOptions, type Cue} from "./types";
 import {type Dependencies} from "../dependencies/buildDependencies";
 
 export const generateTimestampMapping = ({
@@ -39,27 +39,28 @@ export const mergeCuesInsideATimestampStep =
     };
   };
 
-// TODO: here the domain is coupled to VTT format. Some library exist to convert
+// TODO: here the domain is coupled to VTT format. Should I make the conversion in the API ?
 export const convertVttInputToCues = ({parseVttInput}: Dependencies) => (
   input: string,
-  stepDurationInSeconds?: number
+  options?: ConversionOptions
 ): Cue[] => {
   const cues = parseVttInput(input);
-  if (!stepDurationInSeconds) {
+  if (!options?.stepDurationInSeconds) {
     return cues;
   }
 
+  const cleanCues = cues.map(cue => ({...cue, text: cue.text.replace(/\n/g, '')}))
   const timestampsMapping = generateTimestampMapping({
-    maxTimestamp: Math.max(...cues.map((cue) => cue.end)),
-    stepDurationInSeconds,
+    maxTimestamp: Math.max(...cleanCues.map((cue) => cue.end)),
+    stepDurationInSeconds: options.stepDurationInSeconds,
   });
 
   return compact(
     timestampsMapping.map((timestamp) =>
       mergeCuesInsideATimestampStep({
         timestamp,
-        stepDurationInSeconds,
-      })(cues)
+        stepDurationInSeconds: options.stepDurationInSeconds,
+      })(cleanCues)
     )
   );
 };

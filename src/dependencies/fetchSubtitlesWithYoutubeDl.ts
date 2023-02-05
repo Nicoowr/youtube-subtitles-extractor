@@ -17,6 +17,6 @@ export const fetchSubtitlesWithYoutubeDl = async (
 
     const newestVttFile = findNewestVttFile(subtitlesDirectory);
 
-    return fs.readFileSync(newestVttFile);
+    return fs.readFileSync(newestVttFile).toString();
 };
 

@@ -3,3 +3,7 @@ export type Cue = {
   end: number;
   text: string;
 };
+
+export type ConversionOptions = {
+  stepDurationInSeconds?: number;
+}
