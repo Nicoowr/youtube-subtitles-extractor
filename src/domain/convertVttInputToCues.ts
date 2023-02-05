@@ -38,6 +38,8 @@ export const mergeCuesInsideATimestampStep =
       text: cuesInsideStep.map((cue) => cue.text).join(" "),
     };
   };
+
+// TODO: here the domain is coupled to VTT format. Some library exist to convert
 export const convertVttInputToCues = ({parseVttInput}: Dependencies) => (
   input: string,
   stepDurationInSeconds?: number
