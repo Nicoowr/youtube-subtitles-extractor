@@ -1,4 +1,4 @@
-import {parseVttInput} from "../src/parseVttInput";
+import {convertVttInputToCues} from "../src/domain/convertVttInputToCues";
 
 const input = "WEBVTT\n" +
     "Kind: captions\n" +
@@ -1052,7 +1052,7 @@ const input = "WEBVTT\n" +
     "and we'll catch you in the next video.\n" +
     "\n"
 const main = () => {
-    const result = parseVttInput(input, 180);
+    const result = convertVttInputToCues(input, 180);
     console.log(result)
 }
 

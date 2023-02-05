@@ -1,7 +1,6 @@
-import { Cue } from "./domain/types";
 import { compact } from "lodash";
-
-const webVtt = require("node-webvtt");
+import {type Cue} from "./types";
+import {type Dependencies} from "../dependencies/buildDependencies";
 
 export const generateTimestampMapping = ({
   maxTimestamp,
@@ -39,11 +38,11 @@ export const mergeCuesInsideATimestampStep =
       text: cuesInsideStep.map((cue) => cue.text).join(" "),
     };
   };
-export const parseVttInput = (
+export const convertVttInputToCues = ({parseVttInput}: Dependencies) => (
   input: string,
   stepDurationInSeconds?: number
 ): Cue[] => {
-  const cues = webVtt.parse(input, { meta: true }).cues as Cue[];
+  const cues = parseVttInput(input);
   if (!stepDurationInSeconds) {
     return cues;
   }
