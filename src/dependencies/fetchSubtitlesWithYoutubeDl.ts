@@ -13,7 +13,8 @@ const findNewestVttFile = (directory: string): string => {
 export const fetchSubtitlesWithYoutubeDl = async (
   youtubeLink: string
 ): Promise<string> => {
-    await exec(`cd ${subtitlesDirectory} && youtube-dl --all-subs --skip-download ${youtubeLink}`);
+    // await exec(`cd ${subtitlesDirectory} && youtube-dl --write-sub --sub-lang en --skip-download ${youtubeLink}`);
+    await exec(`cd ${subtitlesDirectory} && youtube-dl --write-auto-sub --sub-lang en --skip-download --write-info-json ${youtubeLink}`);
 
     const newestVttFile = findNewestVttFile(subtitlesDirectory);
 
