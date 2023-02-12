@@ -49,7 +49,7 @@ export const convertVttInputToCues = ({parseVttInput}: Dependencies) => (
     return cues;
   }
 
-  const cleanCues = cues.map(cue => ({...cue, text: cue.text.replace(/\n/g, '')}))
+  const cleanCues = cues.map(cue => ({...cue, text: cue.text.replace(/\n/g, " ")}))
   const timestampsMapping = generateTimestampMapping({
     maxTimestamp: Math.max(...cleanCues.map((cue) => cue.end)),
     stepDurationInSeconds: options.stepDurationInSeconds,
