@@ -1,9 +1,11 @@
 export type Cue = {
   start: number;
-  end: number;
   text: string;
+  chapterTitle?: string;
 };
 
-export type ConversionOptions = {
-  stepDurationInSeconds?: number;
+export type Chapter = {
+  start: number;
+  end: number;
+  title: string;
 }
