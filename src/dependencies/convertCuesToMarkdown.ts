@@ -1,8 +1,16 @@
 import {type Cue} from "../domain/types";
 import json2md from "json2md";
 
-const convertTimestampToTimeString = (durationInSeconds: number) => new Date(1000 * durationInSeconds).toISOString().substring(11, 19)
+const cuesHaveChapters = (cues: Cue[]): cues is Array<Cue & { chapterTitle: string }> => cues.every(cue => cue.chapterTitle);
+
+const convertChapterTitleToMarkdown = (title: string) => ({h1: title})
+const convertCueTextToMarkdown = (text: string) => ({p: text})
+
 export const convertCuesToMarkdown = (cues: Cue[]): string => {
-    const formattedCuesForMarkdown = cues.map(cue => ({p: `${convertTimestampToTimeString(cue.start)} - ${cue.text}`}))
+    if (cuesHaveChapters(cues)) {
+        const formattedCuesForMarkdown = cues.flatMap(cue => [convertChapterTitleToMarkdown(cue.chapterTitle), convertCueTextToMarkdown(cue.text)])
+        return json2md(formattedCuesForMarkdown);
+    }
+    const formattedCuesForMarkdown = cues.map(cue => convertCueTextToMarkdown(cue.text))
     return json2md(formattedCuesForMarkdown);
 }

@@ -1,11 +1,11 @@
-import {type Cue} from "../domain/types";
+import {type Chapter, type Cue} from "../domain/types";
 import {fetchSubtitlesWithYoutubeDl} from "./fetchSubtitlesWithYoutubeDl";
 import {parseVttInput} from "./parseVttInput";
 import {convertCuesToMarkdown} from "./convertCuesToMarkdown";
 import {saveMarkdownFile} from "./saveMarkdownFile";
 
 export type Dependencies = {
-    fetchSubtitles: (youtubeLink: string) => Promise<string>;
+    fetchSubtitles: (youtubeLink: string) => Promise<{ subtitles: string; chapters?: Chapter[] }>;
     parseVttInput: (input: string) => Cue[];
     convertCuesToMarkdown: (cues: Cue[]) => string;
     saveMarkdownFile: (markdownString: string) => Promise<void>;
