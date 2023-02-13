@@ -6,8 +6,7 @@ import {convertVttInputToCues} from "./convertVttInputToCues";
 //  conversion en markdown = dep ?
 export const convertYoutubeVideoToMarkdownFileDomain = (dependencies: Dependencies) => async (youtubeUrl: string) => {
     const vttSubtitles = await dependencies.fetchSubtitles(youtubeUrl);
-    const chapters = await dependencies.fetchChapters()
-    const cues = convertVttInputToCues(dependencies)(vttSubtitles);
+    const cues = convertVttInputToCues(dependencies)(vttSubtitles.subtitles, vttSubtitles.chapters);
     const markdownString = dependencies.convertCuesToMarkdown(cues);
     await dependencies.saveMarkdownFile(markdownString);
 };
