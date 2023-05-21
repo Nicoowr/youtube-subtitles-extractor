@@ -8,5 +8,7 @@ export const convertYoutubeVideoToMarkdownFileDomain = (dependencies: Dependenci
     const vttSubtitles = await dependencies.fetchSubtitles(youtubeUrl);
     const cues = convertVttInputToCues(dependencies)(vttSubtitles.subtitles, vttSubtitles.chapters);
     const markdownString = dependencies.convertCuesToMarkdown(cues);
-    await dependencies.saveMarkdownFile(markdownString);
+    console.log("Extracted markdown: ")
+    console.log(markdownString);
+    // await dependencies.saveMarkdownFile(markdownString);
 };
