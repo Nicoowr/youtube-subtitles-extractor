@@ -6,8 +6,8 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "standard-with-typescript",
-        "prettier"
+        "prettier",
+        "next/core-web-vitals"
     ],
     "overrides": [
     ],
