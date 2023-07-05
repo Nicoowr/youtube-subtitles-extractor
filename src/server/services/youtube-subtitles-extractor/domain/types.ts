@@ -8,8 +8,8 @@ export type Chapter = {
   start: number;
   end: number;
   title: string;
-}
+};
 
-type Language = "en" | "fr" | "cn" | "es" | "it"
+type Language = "en" | "fr" | "cn" | "es" | "it";
 
 export type SubtitleLanguage = `${Language}-${Language}`;

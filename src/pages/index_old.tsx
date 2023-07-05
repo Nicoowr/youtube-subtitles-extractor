@@ -2,10 +2,10 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { api } from "~/utils/api";
-import { noop } from "lodash"
+import { noop } from "lodash";
 
 const Home: NextPage = () => {
-  const hello = {data: {greeting: "HEHE"}}// api.router["extract-subtitles"].useQuery({ text: "from tRPCC" });
+  const hello = { data: { greeting: "HEHE" } }; // api.router["extract-subtitles"].useQuery({ text: "from tRPCC" });
 
   return (
     <>
