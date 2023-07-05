@@ -3,7 +3,7 @@
 module.exports = {
   roots: ["<rootDir>"],
   transform: {
-    "^.+\\.(t|j)sx?$": ["@swc-node/jest"],
+    "^.+\\.(t|j)sx?$": ["@swc/jest"],
   },
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],

@@ -1,9 +1,9 @@
-import {buildDependencies} from "../dependencies/buildDependencies";
-import {convertYoutubeVideoToMarkdownFileDomain} from "../domain/convertYoutubeVideoToMarkdownFileDomain";
+import { buildDependencies } from "../dependencies/buildDependencies";
+import { convertYoutubeVideoToMarkdownFileDomain } from "../domain/convertYoutubeVideoToMarkdownFileDomain";
 
 export const convertYoutubeVideoToMarkdownFile = async (youtubeUrl: string) => {
-    const dependencies = buildDependencies();
-    return convertYoutubeVideoToMarkdownFileDomain(dependencies)(youtubeUrl);
+  const dependencies = buildDependencies();
+  return convertYoutubeVideoToMarkdownFileDomain(dependencies)(youtubeUrl);
 };
 
 /*
