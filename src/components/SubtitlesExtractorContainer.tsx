@@ -4,15 +4,20 @@ import {Spinner} from "flowbite-react";
 import {useState} from "react";
 import {api} from "~/utils/api";
 import {Title} from "~/components/Title";
+import {
+    AvailableSubtitles,
+    SubtitleLanguage
+} from "~/components/AvailableSubtitles";
 
 export const SubtitlesExtractorContainer = () => {
 
     const [youtubeUrl, setYoutubeUrl] = useState<string>("")
+    const [availableSubtitles, setAvailableSubtitles] = useState<SubtitleLanguage[]>([])
     const [subtitles, setSubtitles] = useState<string>("")
     const {
         mutate,
         isLoading,
-    } = api.router["extract-subtitles"].useMutation({onSuccess: (data) => setSubtitles(data.subtitles)});
+    } = api.router["available-subtitles"].useMutation({onSuccess: (data) => setAvailableSubtitles(data.availableSubtitles)});
     const handleSubmit = () => {
         mutate({youtubeUrl});
     }
@@ -24,9 +29,10 @@ export const SubtitlesExtractorContainer = () => {
             <Input setYoutubeUrl={setYoutubeUrl}/>
             <SubmitYoutubeUrl handleSubmit={handleSubmit} isLoading={isLoading}/>
         </div>
+        <AvailableSubtitles availableSubtitles={availableSubtitles}/>
         {isLoading ? <Spinner/> :
             <p className="text-2xl text-white">
-                {subtitles}
+                {availableSubtitles}
             </p>}
     </div>
 }

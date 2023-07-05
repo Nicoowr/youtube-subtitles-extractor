@@ -9,3 +9,7 @@ export type Chapter = {
   end: number;
   title: string;
 }
+
+type Language = "en" | "fr" | "cn" | "es" | "it"
+
+export type SubtitleLanguage = `${Language}-${Language}`;

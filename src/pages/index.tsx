@@ -9,9 +9,12 @@ import {Header} from "~/components/Header";
 import {
     SubtitlesExtractorContainer
 } from "~/components/SubtitlesExtractorContainer";
+import {AvailableSubtitles} from "~/components/AvailableSubtitles";
 
 
-// EXAMPLE: https://www.youtube.com/watch?v=3ZcA3KD80iE
+// EXAMPLE:
+// https://www.youtube.com/watch?v=3ZcA3KD80iE (EN)
+// https://www.youtube.com/watch?v=3wdLZMkNTe4 (FR)
 
 const Home: NextPage = () => {
 
