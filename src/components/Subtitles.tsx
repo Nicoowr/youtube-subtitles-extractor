@@ -3,5 +3,5 @@ type Props = {
 };
 
 export const Subtitles = ({ subtitles }: Props) => {
-  return subtitles ? <>{subtitles}</> : null;
+  return subtitles ? <p className={"text-amber-50"}>{subtitles}</p> : null;
 };
