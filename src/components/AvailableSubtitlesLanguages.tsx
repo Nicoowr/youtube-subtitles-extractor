@@ -7,34 +7,32 @@ export type SubtitleLanguage = `${Language}-${Language}`;
 
 type Props = {
   availableSubtitles: SubtitleLanguage[];
-  selectedSubtitlesLanguage: SubtitleLanguage | null;
-  setSelectedSubtitlesLanguage: (
-    selectedSubtitlesLanguage: SubtitleLanguage
+  fetchSubtitlesInSelectedLanguage: (
+    selectedLanguage: SubtitleLanguage
   ) => void;
 };
 
 const availableSubtitlesMapping: Partial<Record<SubtitleLanguage, string>> = {
   "fr-fr": "Français",
+  "en-en": "English",
 };
 
 export const AvailableSubtitlesLanguages = ({
   availableSubtitles,
-  selectedSubtitlesLanguage,
-  setSelectedSubtitlesLanguage,
+  fetchSubtitlesInSelectedLanguage,
 }: Props) => {
   return (
     <div className="w-full px-4 py-16">
       <div className="mx-auto w-full max-w-md">
-        <RadioGroup
-          value={selectedSubtitlesLanguage}
-          onChange={setSelectedSubtitlesLanguage}
-        >
-          <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+        <RadioGroup>
           <div className="space-y-2">
             {availableSubtitles.map((availableSubtitle) => (
               <RadioGroup.Option
+                onClick={() =>
+                  fetchSubtitlesInSelectedLanguage(availableSubtitle)
+                }
                 key={availableSubtitle}
-                value={availableSubtitlesMapping[availableSubtitle]}
+                value={availableSubtitle}
                 className={({ active, checked }) =>
                   `${
                     active
@@ -47,7 +45,7 @@ export const AvailableSubtitlesLanguages = ({
                     relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
                 }
               >
-                {({ active, checked }) => (
+                {({ checked }) => (
                   <>
                     <div className="flex w-full items-center justify-between">
                       <div className="flex items-center">
@@ -58,7 +56,7 @@ export const AvailableSubtitlesLanguages = ({
                               checked ? "text-white" : "text-gray-900"
                             }`}
                           >
-                            {availableSubtitle}
+                            {availableSubtitlesMapping[availableSubtitle]}
                           </RadioGroup.Label>
                         </div>
                       </div>

@@ -8,13 +8,12 @@ import { Title } from "./Title";
 import { Input } from "./Input";
 import { SubmitYoutubeUrl } from "./SubmitYoutubeUrl";
 import { Subtitles } from "./Subtitles";
+import { Spinner } from "flowbite-react";
 
 export const SubtitlesExtractorContainer = () => {
   const [youtubeUrl, setYoutubeUrl] = useState<string>("");
   const [availableSubtitlesLanguages, setAvailableSubtitlesLanguages] =
     useState<SubtitleLanguage[]>([]);
-  const [selectedSubtitlesLanguage, setSelectedSubtitlesLanguage] =
-    useState<SubtitleLanguage | null>(null);
   const [subtitles, setSubtitles] = useState<string>("");
   const {
     mutate: fetchAvailableSubtitlesLanguages,
@@ -30,8 +29,10 @@ export const SubtitlesExtractorContainer = () => {
   const { mutate: fetchSubtitles, isLoading: isFetchingSubtitles } = api.router[
     "fetch-subtitles"
   ].useMutation({ onSuccess: (data) => setSubtitles(data.subtitles) });
-  const handleFetchAvailableSubtitles = () => {
-    fetchSubtitles({ youtubeUrl });
+  const handleFetchAvailableSubtitles = (
+    selectedSubtitlesLanguage: SubtitleLanguage
+  ) => {
+    fetchSubtitles({ youtubeUrl, language: selectedSubtitlesLanguage });
   };
 
   return (
@@ -41,15 +42,18 @@ export const SubtitlesExtractorContainer = () => {
         <Input setYoutubeUrl={setYoutubeUrl} />
         <SubmitYoutubeUrl
           handleSubmit={handleFetchAvailableSubtitlesLanguages}
-          isLoading={isLoading}
+          isLoading={isFetchingAvailableSubtitlesLanguages}
         />
       </div>
       <AvailableSubtitlesLanguages
+        fetchSubtitlesInSelectedLanguage={handleFetchAvailableSubtitles}
         availableSubtitles={availableSubtitlesLanguages}
-        selectedSubtitlesLanguage={selectedSubtitlesLanguage}
-        setSelectedSubtitlesLanguage={setSelectedSubtitlesLanguage}
       />
-      <Subtitles subtitles={subtitles} />
+      {isFetchingSubtitles ? (
+        <Spinner color={"info"} />
+      ) : (
+        <Subtitles subtitles={subtitles} />
+      )}
     </div>
   );
 };
