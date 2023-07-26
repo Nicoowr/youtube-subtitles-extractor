@@ -1,9 +1,20 @@
 import { type Dependencies } from "../dependencies/buildDependencies";
 import { convertVttInputToCues } from "./convertVttInputToCues";
+import { type SubtitleLanguage } from "./types";
 
 export const convertYoutubeVideoToMarkdownFileDomain =
-  (dependencies: Dependencies) => async (youtubeUrl: string) => {
-    const vttSubtitles = await dependencies.fetchSubtitles(youtubeUrl);
+  (dependencies: Dependencies) =>
+  async ({
+    youtubeUrl,
+    language,
+  }: {
+    youtubeUrl: string;
+    language: SubtitleLanguage;
+  }) => {
+    const vttSubtitles = await dependencies.fetchSubtitles({
+      youtubeUrl,
+      language,
+    });
     const cues = convertVttInputToCues(dependencies)(
       vttSubtitles.subtitles,
       vttSubtitles.chapters

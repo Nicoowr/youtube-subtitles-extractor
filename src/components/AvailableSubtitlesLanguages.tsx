@@ -3,7 +3,7 @@ import { CheckIcon } from "../lib/CheckIcon";
 
 type Language = "en" | "fr" | "cn" | "es" | "it";
 
-export type SubtitleLanguage = `${Language}-${Language}`;
+export type SubtitleLanguage = Language;
 
 type Props = {
   availableSubtitles: SubtitleLanguage[];
@@ -13,8 +13,8 @@ type Props = {
 };
 
 const availableSubtitlesMapping: Partial<Record<SubtitleLanguage, string>> = {
-  "fr-fr": "Français",
-  "en-en": "English",
+  fr: "Français",
+  en: "English",
 };
 
 export const AvailableSubtitlesLanguages = ({

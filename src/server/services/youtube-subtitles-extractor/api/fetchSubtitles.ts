@@ -1,15 +1,19 @@
 import { buildDependencies } from "../dependencies/buildDependencies";
 import { convertYoutubeVideoToMarkdownFileDomain } from "../domain/convertYoutubeVideoToMarkdownFileDomain";
+import { type SubtitleLanguage } from "../domain/types";
 
-export const convertYoutubeVideoToMarkdownFile = async ({
+export const fetchSubtitles = async ({
   youtubeUrl,
   language,
 }: {
   youtubeUrl: string;
-  language: string;
+  language: SubtitleLanguage;
 }) => {
   const dependencies = buildDependencies();
-  return convertYoutubeVideoToMarkdownFileDomain(dependencies)(youtubeUrl);
+  return convertYoutubeVideoToMarkdownFileDomain(dependencies)({
+    youtubeUrl,
+    language,
+  });
 };
 
 /*

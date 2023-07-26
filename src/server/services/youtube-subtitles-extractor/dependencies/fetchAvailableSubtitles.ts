@@ -4,7 +4,7 @@ import { type SubtitleLanguage } from "../domain/types";
 
 const exec = promisify(execNotPromisified);
 
-const originalLanguageRegex = /([a-z]{2})-\1/g; // This regex will match subtitles of type fr-fr , not en-fr
+const originalLanguageRegex = /(?<![a-zA-Z-])([a-zA-Z]{2})(?![a-zA-Z-])/g; // This regex will match subtitles of type fr-fr , not en-fr
 
 export const fetchAvailableSubtitles = async ({
   youtubeUrl,
@@ -18,5 +18,6 @@ export const fetchAvailableSubtitles = async ({
     originalLanguageRegex
   );
 
+  console.log(originalSubtitlesMatched);
   return (originalSubtitlesMatched || []) as SubtitleLanguage[];
 };

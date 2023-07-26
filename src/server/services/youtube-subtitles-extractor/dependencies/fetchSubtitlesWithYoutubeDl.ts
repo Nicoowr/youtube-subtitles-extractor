@@ -2,7 +2,7 @@ import { promisify } from "util";
 import { exec as execNotPromisified } from "child_process";
 import fs from "fs";
 import glob from "glob";
-import { type Chapter } from "../domain/types";
+import { type Chapter, type SubtitleLanguage } from "../domain/types";
 import { type Dependencies } from "./buildDependencies";
 
 const exec = promisify(execNotPromisified);
@@ -16,16 +16,25 @@ const findNewestVttFile = (directory: string, extension: string): string => {
 };
 // TODO: handle chapters extraction, specifically the file fetching part (what happens if there is not chapter, might need an identifier)
 export const fetchSubtitlesWithYoutubeDl: Dependencies["fetchSubtitles"] =
-  async (
-    youtubeLink: string
-  ): Promise<{ subtitles: string; chapters?: Chapter[] }> => {
+  async ({
+    youtubeUrl,
+    language,
+  }: {
+    youtubeUrl: string;
+    language: SubtitleLanguage;
+  }): Promise<{ subtitles: string; chapters?: Chapter[] }> => {
     await exec(
-      `cd ${subtitlesDirectory} && yt-dlp --write-subs --sub-lang "en.*" --skip-download --write-info-json --convert-subs vtt ${youtubeLink}`
+      `cd ${subtitlesDirectory} && yt-dlp --write-subs --sub-langs "${language}" --skip-download --write-info-json --convert-subs vtt ${youtubeUrl}`
     );
 
     const newestVttFile = findNewestVttFile(subtitlesDirectory, "vtt");
 
+    console.log("HAAH");
+    console.log(
+      `yt-dlp --write-subs --sub-langs "${language}" --skip-download --write-info-json --convert-subs vtt ${youtubeUrl}`
+    );
     const subtitles = fs.readFileSync(newestVttFile).toString();
+    console.log(subtitles);
     const newestMetadataFile = findNewestVttFile(subtitlesDirectory, "json");
 
     if (newestMetadataFile) {

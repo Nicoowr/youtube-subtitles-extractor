@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { convertYoutubeVideoToMarkdownFile } from "../../services/youtube-subtitles-extractor/api/convertYoutubeVideoToMarkdownFile";
+import { fetchSubtitles } from "../../services/youtube-subtitles-extractor/api/fetchSubtitles";
 import { fetchAvailableSubtitlesLanguages } from "../../services/youtube-subtitles-extractor/api/fetchAvailableSubtitlesLanguages";
 
 export const router = createTRPCRouter({
@@ -8,7 +8,7 @@ export const router = createTRPCRouter({
     .input(z.object({ youtubeUrl: z.string(), language: z.string() }))
     .mutation(async ({ input }) => {
       console.log("INPUT: ", input.language);
-      const result = await convertYoutubeVideoToMarkdownFile({
+      const result = await fetchSubtitles({
         youtubeUrl: input.youtubeUrl,
         language: input.language,
       });
